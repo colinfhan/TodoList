@@ -9,17 +9,25 @@ class TodoList extends Component {
     this.handleBtnClick = this.handleBtnClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.manageEnter = this.manageEnter.bind(this);
     this.state = {
       list: [],
       inputValue: ''
     }
   }
 
+  manageEnter(e) {
+    if(e.keyCode === 13) {
+      this.handleBtnClick()
+    }
+  }
+
   handleBtnClick() {
-    this.setState({
-      list: [...this.state.list, this.state.inputValue],
-      inputValue: ''
-    })
+    if (this.state.inputValue === 0 || !!this.state.inputValue)
+      this.setState({
+        list: [...this.state.list, this.state.inputValue],
+        inputValue: ''
+      })
   }
 
   handleInputChange(e) {
@@ -53,7 +61,7 @@ class TodoList extends Component {
     return (
       <div>
         <div>
-          <input value={this.state.inputValue} onChange={this.handleInputChange}/>
+          <input value={this.state.inputValue} onChange={this.handleInputChange} onKeyDown={this.manageEnter} />
           <button onClick={this.handleBtnClick}>add</button>
         </div>
         <ul>{this.getTodoItems()}</ul>
